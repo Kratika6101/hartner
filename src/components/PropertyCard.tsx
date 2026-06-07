@@ -276,7 +276,7 @@ export default function FeaturedProperties() {
           }}
         >
           {filtered.map((p) => (
-            <PropertyCard key={p.id} property={p} />
+            <PropertyCardItem key={p.id} property={p} />
           ))}
         </div>
 
@@ -310,217 +310,15 @@ export default function FeaturedProperties() {
     </section>
   );
 }
-
-function PropertyCard({ property }: { property: typeof PROPERTIES[0] }) {
-  const [hovered, setHovered] = useState(false);
-
+function PropertyCardItem({
+  property,
+}: {
+  property: typeof PROPERTIES[0];
+}) {
   return (
-    <Link
-      href={`/properties/${property.id}`}
-      style={{ textDecoration: "none", display: "block" }}
-      className="reveal-card"
-    >
-      <article
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
-        style={{
-          borderRadius: 20,
-          overflow: "hidden",
-          background: "white",
-          border: "1px solid rgba(0,0,0,0.07)",
-          boxShadow: hovered
-            ? "0 24px 64px rgba(0,0,0,0.13)"
-            : "0 4px 24px rgba(0,0,0,0.06)",
-          transform: hovered ? "translateY(-6px)" : "translateY(0)",
-          transition: "all 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
-          opacity: 1,
-        }}
-      >
-        {/* Image */}
-        <div style={{ position: "relative", aspectRatio: "4/3", overflow: "hidden" }}>
-          <img
-            src={property.img}
-            alt={property.title}
-            style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              transform: hovered ? "scale(1.06)" : "scale(1)",
-              transition: "transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)",
-            }}
-            loading="lazy"
-          />
-          {/* Overlay */}
-          <div
-            style={{
-              position: "absolute",
-              inset: 0,
-              background: hovered
-                ? "linear-gradient(to top, rgba(6,26,18,0.65) 0%, transparent 55%)"
-                : "linear-gradient(to top, rgba(6,26,18,0.45) 0%, transparent 50%)",
-              transition: "all 0.3s",
-            }}
-          />
-
-          {/* Badge top-left */}
-          <span
-            style={{
-              position: "absolute",
-              top: 14,
-              left: 14,
-              background: property.badgeColor,
-              borderRadius: 99,
-              padding: "4px 12px",
-              fontSize: 11,
-              fontWeight: 700,
-              color: "white",
-              fontFamily: "'Outfit', sans-serif",
-              letterSpacing: 0.3,
-            }}
-          >
-            {property.badge}
-          </span>
-
-          {/* Tag top-right */}
-          <span
-            style={{
-              position: "absolute",
-              top: 14,
-              right: 14,
-              background: property.tagBg,
-              borderRadius: 99,
-              padding: "4px 12px",
-              fontSize: 11,
-              fontWeight: 600,
-              color: "white",
-              fontFamily: "'Outfit', sans-serif",
-            }}
-          >
-            {property.tag}
-          </span>
-
-          {/* Arrow on hover */}
-          <div
-            style={{
-              position: "absolute",
-              bottom: 14,
-              right: 14,
-              width: 38,
-              height: 38,
-              borderRadius: "50%",
-              background: "white",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              opacity: hovered ? 1 : 0,
-              transform: hovered ? "translateY(0) scale(1)" : "translateY(8px) scale(0.8)",
-              transition: "all 0.3s",
-              boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
-            }}
-          >
-            <ArrowUpRight size={16} color="#0B6E4F" />
-          </div>
-        </div>
-
-        {/* Content */}
-        <div style={{ padding: "20px 22px 22px" }}>
-          {/* Location */}
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 5,
-              color: "#9e9e97",
-              fontSize: 12,
-              marginBottom: 8,
-              fontFamily: "'Outfit', sans-serif",
-            }}
-          >
-            <MapPin size={12} />
-            <span>{property.location}</span>
-          </div>
-
-          {/* Title */}
-          <h3
-            style={{
-              fontFamily: "'Cormorant Garamond', serif",
-              fontSize: 22,
-              fontWeight: 600,
-              color: hovered ? "#0B6E4F" : "#0D1117",
-              lineHeight: 1.25,
-              marginBottom: 14,
-              transition: "color 0.2s",
-            }}
-          >
-            {property.title}
-          </h3>
-
-          {/* Stats row */}
-          <div
-            style={{
-              display: "flex",
-              gap: 16,
-              color: "#5e5e58",
-              fontSize: 13,
-              marginBottom: 18,
-              fontFamily: "'Outfit', sans-serif",
-            }}
-          >
-            <span style={{ display: "flex", alignItems: "center", gap: 5 }}>
-              <Maximize2 size={13} color="#0B6E4F" />
-              {property.area} m²
-            </span>
-            {property.rooms > 0 && (
-              <span style={{ display: "flex", alignItems: "center", gap: 5 }}>
-                <BedDouble size={13} color="#0B6E4F" />
-                {property.rooms} rooms
-              </span>
-            )}
-            <span style={{ display: "flex", alignItems: "center", gap: 5 }}>
-              <Star size={12} color="#C9952A" fill="#C9952A" />
-              {property.type}
-            </span>
-          </div>
-
-          {/* Price bar */}
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              paddingTop: 16,
-              borderTop: "1px solid #efefeb",
-            }}
-          >
-            <span
-              style={{
-                fontFamily: "'Cormorant Garamond', serif",
-                fontSize: 26,
-                fontWeight: 700,
-                color: "#0B6E4F",
-                lineHeight: 1,
-              }}
-            >
-              {property.price}
-            </span>
-            <span
-              style={{
-                padding: "5px 12px",
-                borderRadius: 8,
-                background: "linear-gradient(135deg, rgba(11,110,79,0.08), rgba(16,168,112,0.12))",
-                color: "#0B6E4F",
-                fontSize: 11,
-                fontWeight: 600,
-                fontFamily: "'Outfit', sans-serif",
-                letterSpacing: "0.5px",
-                textTransform: "uppercase",
-              }}
-            >
-              {property.listing === "rent" ? "For Rent" : "For Sale"}
-            </span>
-          </div>
-        </div>
-      </article>
-    </Link>
+    <div>
+      {property.title}
+    </div>
   );
 }
+

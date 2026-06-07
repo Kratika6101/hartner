@@ -63,7 +63,7 @@ export default function HomePage() {
 
           <div className="prop-grid">
             {featured.map((p) => (
-              <PropertyCard key={p.id} property={p} />
+              <div key={p.id}>{p.title}</div>
             ))}
           </div>
         </div>

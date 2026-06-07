@@ -245,7 +245,7 @@ export default function PropertiesPage() {
         {filtered.length > 0 ? (
           <div className="prop-grid">
             {filtered.map((p) => (
-              <PropertyCard key={p.id} property={p} />
+              <div key={p.id}>{p.title}</div>
             ))}
           </div>
         ) : (
