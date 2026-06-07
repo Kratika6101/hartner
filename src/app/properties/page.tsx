@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
-import PropertyCard from "@/components/PropertyCard";
 import { properties } from "@/lib/data";
 import { Property } from "@/lib/types";
 
@@ -27,13 +26,13 @@ const SORT_OPTIONS = [
 ];
 
 export default function PropertiesPage() {
-  const searchParams = useSearchParams();
 
-  const [typeFilter,    setTypeFilter]    = useState(searchParams.get("type")     || "all");
-  const [listingFilter, setListingFilter] = useState(searchParams.get("listing")  || "");
-  const [locationQuery, setLocationQuery] = useState(searchParams.get("location") || "");
+
+  const [typeFilter, setTypeFilter] = useState("all");
+const [listingFilter, setListingFilter] = useState("");
+const [locationQuery, setLocationQuery] = useState("");
+const [searchInput, setSearchInput] = useState("");
   const [sort,          setSort]          = useState("newest");
-  const [searchInput,   setSearchInput]   = useState(searchParams.get("location") || "");
 
   /* ── Filter + sort ── */
   const filtered: Property[] = properties
